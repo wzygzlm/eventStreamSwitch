@@ -1,4 +1,4 @@
-<project xmlns="com.autoesl.autopilot.project" top="eventStreamSwitch" name="eventStreamSwitch">
+<project xmlns="com.autoesl.autopilot.project" name="eventStreamSwitch" top="eventStreamSwitch">
     <includePaths/>
     <libraryPaths/>
     <Simulation>

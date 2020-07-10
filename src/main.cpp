@@ -8,10 +8,12 @@
 void eventStreamSwitch(ap_uint<1> select,
 		hls::stream< ap_uint<16> > &xStreamIn0, hls::stream< ap_uint<16> > &yStreamIn0,
 		hls::stream< ap_uint<64> > &tsStreamIn0, hls::stream< ap_uint<1> > &polStreamIn0,
+		hls::stream< ap_uint<1> > &cornerStreamIn0,
 		hls::stream< ap_uint<16> > &xStreamIn1, hls::stream< ap_uint<16> > &yStreamIn1,
 		hls::stream< ap_uint<64> > &tsStreamIn1, hls::stream< ap_uint<1> > &polStreamIn1,
 		hls::stream< ap_uint<16> > &xStreamOut, hls::stream< ap_uint<16> > &yStreamOut,
-		hls::stream< ap_uint<64> > &tsStreamOut, hls::stream< ap_uint<1> > &polStreamOut)
+		hls::stream< ap_uint<64> > &tsStreamOut, hls::stream< ap_uint<1> > &polStreamOut,
+		hls::stream< ap_uint<1> > &cornerStreamOut)
 {
 #pragma HLS PIPELINE
 #pragma HLS INTERFACE axis register both port=tsStreamOut
@@ -19,11 +21,13 @@ void eventStreamSwitch(ap_uint<1> select,
 #pragma HLS INTERFACE axis register both port=yStreamOut
 #pragma HLS INTERFACE axis register both port=xStreamOut
 
+#pragma HLS INTERFACE axis register both port=cornerStreamIn0
 #pragma HLS INTERFACE axis register both port=polStreamIn1
 #pragma HLS INTERFACE axis register both port=tsStreamIn1
 #pragma HLS INTERFACE axis register both port=yStreamIn1
 #pragma HLS INTERFACE axis register both port=xStreamIn1
 
+#pragma HLS INTERFACE axis register both port=cornerStreamOut
 #pragma HLS INTERFACE axis register both port=polStreamIn0
 #pragma HLS INTERFACE axis register both port=tsStreamIn0
 #pragma HLS INTERFACE axis register both port=yStreamIn0
@@ -35,6 +39,8 @@ void eventStreamSwitch(ap_uint<1> select,
 	ap_uint<1> pol0, pol1;
 	ap_uint<64> ts;
 	ap_uint<64> ts0, ts1;
+	ap_uint<1> corner;
+	ap_uint<1> cornerIn0;
 
 	if(select == 0)
 	{
@@ -42,11 +48,13 @@ void eventStreamSwitch(ap_uint<1> select,
 		yStreamIn0 >> y0;
 		polStreamIn0 >> pol0;
 		tsStreamIn0 >> ts0;
+		cornerStreamIn0 >> cornerIn0;
 
 		x = x0;
 		y = y0;
 		pol = pol0;
 		ts = ts0;
+		corner = cornerIn0;
 	}
 	else
 	{
@@ -59,10 +67,12 @@ void eventStreamSwitch(ap_uint<1> select,
 		y = y1;
 		pol = pol1;
 		ts = ts1;
+		corner = 1;
 	}
 
 	xStreamOut << x;
 	yStreamOut << y;
 	tsStreamOut << ts;
 	polStreamOut << pol;
+	cornerStreamOut << corner;
 }
