@@ -36,8 +36,24 @@
   },
   "Files": {
     "CSource": ["..\/src\/main.cpp"],
-    "Vhdl": ["impl\/vhdl\/eventStreamSwitch.vhd"],
-    "Verilog": ["impl\/verilog\/eventStreamSwitch.v"],
+    "Vhdl": [
+      "impl\/vhdl\/eventStreamSwitch_config_s_axi.vhd",
+      "impl\/vhdl\/eventStreamSwitch.vhd"
+    ],
+    "Verilog": [
+      "impl\/verilog\/eventStreamSwitch_config_s_axi.v",
+      "impl\/verilog\/eventStreamSwitch.v"
+    ],
+    "SwDriver": [
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/data\/eventStreamSwitch.mdd",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/data\/eventStreamSwitch.tcl",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/Makefile",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/xeventstreamswitch.c",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/xeventstreamswitch.h",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/xeventstreamswitch_hw.h",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/xeventstreamswitch_linux.c",
+      "impl\/misc\/drivers\/eventStreamSwitch_v1_0\/src\/xeventstreamswitch_sinit.c"
+    ],
     "Misc": ["impl\/misc\/logo.png"]
   },
   "SubcoreInfo": {
@@ -49,7 +65,7 @@
     "ap_clk": {
       "type": "clock",
       "ctype": {"CLK": {"Type": "bool"}},
-      "buses": "xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V xStreamIn0_V_V yStreamIn0_V_V tsStreamIn0_V_V polStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V tsStreamIn1_V_V polStreamIn1_V_V",
+      "buses": "s_axi_config xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V xStreamIn0_V_V yStreamIn0_V_V tsStreamIn0_V_V polStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V tsStreamIn1_V_V polStreamIn1_V_V",
       "reset": "ap_rst_n"
     },
     "ap_ctrl": {
@@ -146,6 +162,78 @@
         "TVALID": {"Type": "bool"}
       },
       "port_width": {"TDATA": "8"}
+    },
+    "s_axi_config": {
+      "type": "axi4lite",
+      "is_adaptor": "true",
+      "mode": "slave",
+      "port_prefix": "s_axi_config",
+      "param_prefix": "C_S_AXI_CONFIG",
+      "addr_bits": "5",
+      "registers": [{
+          "offset": "0x10",
+          "name": "config_V",
+          "access": "W",
+          "reset_value": "0x0",
+          "description": "Data signal of config_V",
+          "fields": [{
+              "offset": "0",
+              "width": "32",
+              "name": "config_V",
+              "access": "W",
+              "reset_value": "0",
+              "description": "Bit 31 to 0 Data signal of config_V"
+            }]
+        }],
+      "memories": "",
+      "ctype": {
+        "AWVALID": {"Type": "bool"},
+        "AWREADY": {"Type": "bool"},
+        "WVALID": {"Type": "bool"},
+        "WREADY": {"Type": "bool"},
+        "BVALID": {"Type": "bool"},
+        "BREADY": {"Type": "bool"},
+        "BRESP": {
+          "Type": "integer unsigned",
+          "Width": "2"
+        },
+        "ARVALID": {"Type": "bool"},
+        "ARREADY": {"Type": "bool"},
+        "RVALID": {"Type": "bool"},
+        "RREADY": {"Type": "bool"},
+        "RRESP": {
+          "Type": "integer unsigned",
+          "Width": "2"
+        },
+        "AWADDR": {
+          "Type": "integer unsigned",
+          "Width": "5"
+        },
+        "WDATA": {
+          "Type": "integer unsigned",
+          "Width": "32"
+        },
+        "WSTRB": {
+          "Type": "integer unsigned",
+          "Width": "4"
+        },
+        "ARADDR": {
+          "Type": "integer unsigned",
+          "Width": "5"
+        },
+        "RDATA": {
+          "Type": "integer unsigned",
+          "Width": "32"
+        }
+      },
+      "data_width": "32",
+      "port_width": {
+        "ARADDR": "5",
+        "AWADDR": "5",
+        "RDATA": "32",
+        "WDATA": "32",
+        "WSTRB": "4"
+      }
     },
     "select_V": {
       "type": "data",
@@ -293,6 +381,74 @@
     }
   },
   "RtlPorts": {
+    "s_axi_config_AWVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "s_axi_config_AWREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "s_axi_config_AWADDR": {
+      "dir": "in",
+      "width": "5"
+    },
+    "s_axi_config_WVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "s_axi_config_WREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "s_axi_config_WDATA": {
+      "dir": "in",
+      "width": "32"
+    },
+    "s_axi_config_WSTRB": {
+      "dir": "in",
+      "width": "4"
+    },
+    "s_axi_config_ARVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "s_axi_config_ARREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "s_axi_config_ARADDR": {
+      "dir": "in",
+      "width": "5"
+    },
+    "s_axi_config_RVALID": {
+      "dir": "out",
+      "width": "1"
+    },
+    "s_axi_config_RREADY": {
+      "dir": "in",
+      "width": "1"
+    },
+    "s_axi_config_RDATA": {
+      "dir": "out",
+      "width": "32"
+    },
+    "s_axi_config_RRESP": {
+      "dir": "out",
+      "width": "2"
+    },
+    "s_axi_config_BVALID": {
+      "dir": "out",
+      "width": "1"
+    },
+    "s_axi_config_BREADY": {
+      "dir": "in",
+      "width": "1"
+    },
+    "s_axi_config_BRESP": {
+      "dir": "out",
+      "width": "2"
+    },
     "ap_clk": {
       "dir": "in",
       "width": "1"
@@ -492,6 +648,14 @@
     }
   },
   "CPorts": {
+    "config_V": {
+      "interfaceRef": "s_axi_config",
+      "dir": "in",
+      "offset": "16",
+      "statusOffset": "NA",
+      "handshakeRef": "ap_none",
+      "Object": "config"
+    },
     "ap_ctrl": {
       "interfaceRef": "ap_ctrl",
       "dir": "out"
@@ -578,19 +742,19 @@
         "Timing": {
           "Target": "10.00",
           "Uncertainty": "1.25",
-          "Estimate": "1.77"
+          "Estimate": "3.75"
         },
         "Area": {
-          "FF": "716",
-          "LUT": "717",
           "BRAM_18K": "0",
+          "FF": "784",
+          "LUT": "823",
           "DSP48E": "0"
         }
       }}
   },
   "GenData": {
     "DataVersion": "0.1",
-    "Time": "2020-07-05 20:09:36 +0200",
+    "Time": "2020-07-16 18:14:36 +0200",
     "ToolName": "vivado_hls",
     "ToolVersion": "2018.1"
   }

@@ -5,7 +5,7 @@
 #include "hls_stream.h"
 #include "ap_axi_sdata.h"
 
-void eventStreamSwitch(ap_uint<1> select,
+void eventStreamSwitch(ap_uint<1> select, ap_uint<32> config,
 		hls::stream< ap_uint<16> > &xStreamIn0, hls::stream< ap_uint<16> > &yStreamIn0,
 		hls::stream< ap_uint<64> > &tsStreamIn0, hls::stream< ap_uint<1> > &polStreamIn0,
 		hls::stream< ap_uint<1> > &cornerStreamIn0,
@@ -16,6 +16,8 @@ void eventStreamSwitch(ap_uint<1> select,
 		hls::stream< ap_uint<1> > &cornerStreamOut)
 {
 #pragma HLS PIPELINE
+#pragma HLS INTERFACE s_axilite port=config bundle=config
+
 #pragma HLS INTERFACE axis register both port=tsStreamOut
 #pragma HLS INTERFACE axis register both port=polStreamOut
 #pragma HLS INTERFACE axis register both port=yStreamOut
@@ -49,6 +51,11 @@ void eventStreamSwitch(ap_uint<1> select,
 		polStreamIn0 >> pol0;
 		tsStreamIn0 >> ts0;
 		cornerStreamIn0 >> cornerIn0;
+
+		if(config[0] == 1)  // config bit 0. 1: forward mode. 0: corner filter mode.
+		{
+			cornerIn0 = 1;
+		}
 
 		x = x0;
 		y = y0;
