@@ -5,7 +5,7 @@
 #include "hls_stream.h"
 #include "ap_axi_sdata.h"
 
-void eventStreamSwitch(ap_uint<1> select, ap_uint<32> config,
+void eventStreamSwitch(ap_uint<32> config,
 		hls::stream< ap_uint<16> > &xStreamIn0, hls::stream< ap_uint<16> > &yStreamIn0,
 		hls::stream< ap_uint<64> > &tsStreamIn0, hls::stream< ap_uint<1> > &polStreamIn0,
 		hls::stream< ap_uint<1> > &cornerStreamIn0,
@@ -44,6 +44,8 @@ void eventStreamSwitch(ap_uint<1> select, ap_uint<32> config,
 	ap_uint<1> corner;
 	ap_uint<1> cornerIn0;
 
+	ap_uint<1> select = config[0]; // config bit 0. 0 : real-time mode (default). 1: file playing mode
+
 	if(select == 0)
 	{
 		xStreamIn0 >> x0;
@@ -52,7 +54,8 @@ void eventStreamSwitch(ap_uint<1> select, ap_uint<32> config,
 		tsStreamIn0 >> ts0;
 		cornerStreamIn0 >> cornerIn0;
 
-		if(config[0] == 1)  // config bit 0. 1: forward mode. 0: corner filter mode.
+		// config bit 1. 1: forward mode (flag all events to corners). 0: corner filter mode (only flag real corner events)
+		if(config[1] == 1)
 		{
 			cornerIn0 = 1;
 		}

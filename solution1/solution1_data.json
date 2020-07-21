@@ -235,15 +235,6 @@
         "WSTRB": "4"
       }
     },
-    "select_V": {
-      "type": "data",
-      "dir": "in",
-      "width": "1",
-      "ctype": {"DATA": {
-          "Type": "integer unsigned",
-          "Width": "1"
-        }}
-    },
     "tsStreamIn0_V_V": {
       "type": "axi4stream",
       "mode": "slave",
@@ -533,11 +524,6 @@
       "dir": "out",
       "width": "1"
     },
-    "select_V": {
-      "dir": "in",
-      "width": "1",
-      "isVector": "true"
-    },
     "xStreamIn0_V_V_TDATA": {
       "dir": "in",
       "width": "16"
@@ -685,12 +671,6 @@
       "dir": "out",
       "firstOutLatency": "1"
     },
-    "select_V": {
-      "interfaceRef": "select_V",
-      "dir": "in",
-      "dataWidth": "1",
-      "handshakeRef": "ap_none"
-    },
     "xStreamIn0_V_V": {
       "interfaceRef": "xStreamIn0_V_V",
       "dir": "in"
@@ -742,11 +722,11 @@
         "Timing": {
           "Target": "10.00",
           "Uncertainty": "1.25",
-          "Estimate": "3.75"
+          "Estimate": "2.75"
         },
         "Area": {
           "BRAM_18K": "0",
-          "FF": "784",
+          "FF": "785",
           "LUT": "823",
           "DSP48E": "0"
         }
@@ -754,7 +734,7 @@
   },
   "GenData": {
     "DataVersion": "0.1",
-    "Time": "2020-07-16 18:14:36 +0200",
+    "Time": "2020-07-21 21:51:01 +0200",
     "ToolName": "vivado_hls",
     "ToolVersion": "2018.1"
   }
