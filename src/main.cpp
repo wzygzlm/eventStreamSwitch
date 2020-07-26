@@ -11,6 +11,7 @@ void eventStreamSwitch(ap_uint<32> config,
 		hls::stream< ap_uint<1> > &cornerStreamIn0,
 		hls::stream< ap_uint<16> > &xStreamIn1, hls::stream< ap_uint<16> > &yStreamIn1,
 		hls::stream< ap_uint<64> > &tsStreamIn1, hls::stream< ap_uint<1> > &polStreamIn1,
+		hls::stream< ap_uint<1> > &cornerStreamIn1,
 		hls::stream< ap_uint<16> > &xStreamOut, hls::stream< ap_uint<16> > &yStreamOut,
 		hls::stream< ap_uint<64> > &tsStreamOut, hls::stream< ap_uint<1> > &polStreamOut,
 		hls::stream< ap_uint<1> > &cornerStreamOut)
@@ -18,18 +19,19 @@ void eventStreamSwitch(ap_uint<32> config,
 #pragma HLS PIPELINE
 #pragma HLS INTERFACE s_axilite port=config bundle=config
 
+#pragma HLS INTERFACE axis register both port=cornerStreamOut
 #pragma HLS INTERFACE axis register both port=tsStreamOut
 #pragma HLS INTERFACE axis register both port=polStreamOut
 #pragma HLS INTERFACE axis register both port=yStreamOut
 #pragma HLS INTERFACE axis register both port=xStreamOut
 
-#pragma HLS INTERFACE axis register both port=cornerStreamIn0
+#pragma HLS INTERFACE axis register both port=cornerStreamIn1
 #pragma HLS INTERFACE axis register both port=polStreamIn1
 #pragma HLS INTERFACE axis register both port=tsStreamIn1
 #pragma HLS INTERFACE axis register both port=yStreamIn1
 #pragma HLS INTERFACE axis register both port=xStreamIn1
 
-#pragma HLS INTERFACE axis register both port=cornerStreamOut
+#pragma HLS INTERFACE axis register both port=cornerStreamIn0
 #pragma HLS INTERFACE axis register both port=polStreamIn0
 #pragma HLS INTERFACE axis register both port=tsStreamIn0
 #pragma HLS INTERFACE axis register both port=yStreamIn0
@@ -42,7 +44,7 @@ void eventStreamSwitch(ap_uint<32> config,
 	ap_uint<64> ts;
 	ap_uint<64> ts0, ts1;
 	ap_uint<1> corner;
-	ap_uint<1> cornerIn0;
+	ap_uint<1> cornerIn0, cornerIn1;
 
 	ap_uint<1> select = config[0]; // config bit 0. 0 : real-time mode (default). 1: file playing mode
 
@@ -72,12 +74,20 @@ void eventStreamSwitch(ap_uint<32> config,
 		yStreamIn1 >> y1;
 		polStreamIn1 >> pol1;
 		tsStreamIn1 >> ts1;
+		cornerStreamIn1 >> cornerIn1;
+
+		// config bit 1. 1: forward mode (flag all events to corners). 0: corner filter mode (only flag real corner events)
+		if(config[1] == 1)
+		{
+			cornerIn1 = 1;
+		}
 
 		x = x1;
 		y = y1;
 		pol = pol1;
 		ts = ts1;
 		corner = 1;
+		corner = cornerIn1;
 	}
 
 	xStreamOut << x;

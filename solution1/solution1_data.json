@@ -65,7 +65,7 @@
     "ap_clk": {
       "type": "clock",
       "ctype": {"CLK": {"Type": "bool"}},
-      "buses": "s_axi_config xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V xStreamIn0_V_V yStreamIn0_V_V tsStreamIn0_V_V polStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V tsStreamIn1_V_V polStreamIn1_V_V",
+      "buses": "s_axi_config xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V xStreamIn0_V_V yStreamIn0_V_V tsStreamIn0_V_V polStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V tsStreamIn1_V_V polStreamIn1_V_V cornerStreamIn1_V_V",
       "reset": "ap_rst_n"
     },
     "ap_ctrl": {
@@ -87,6 +87,22 @@
       "type": "axi4stream",
       "mode": "slave",
       "port_prefix": "cornerStreamIn0_V_V",
+      "has_tready": "1",
+      "ctype": {
+        "TDATA": {
+          "Type": "integer unsigned",
+          "Width": "1",
+          "Bits": "8"
+        },
+        "TVALID": {"Type": "bool"},
+        "TREADY": {"Type": "bool"}
+      },
+      "port_width": {"TDATA": "8"}
+    },
+    "cornerStreamIn1_V_V": {
+      "type": "axi4stream",
+      "mode": "slave",
+      "port_prefix": "cornerStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
         "TDATA": {
@@ -631,6 +647,18 @@
     "polStreamIn1_V_V_TREADY": {
       "dir": "out",
       "width": "1"
+    },
+    "cornerStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "8"
+    },
+    "cornerStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "cornerStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
     }
   },
   "CPorts": {
@@ -706,6 +734,10 @@
     "polStreamIn1_V_V": {
       "interfaceRef": "polStreamIn1_V_V",
       "dir": "in"
+    },
+    "cornerStreamIn1_V_V": {
+      "interfaceRef": "cornerStreamIn1_V_V",
+      "dir": "in"
     }
   },
   "ModuleInfo": {
@@ -726,15 +758,15 @@
         },
         "Area": {
           "BRAM_18K": "0",
-          "FF": "785",
-          "LUT": "823",
+          "FF": "806",
+          "LUT": "870",
           "DSP48E": "0"
         }
       }}
   },
   "GenData": {
     "DataVersion": "0.1",
-    "Time": "2020-07-21 21:51:01 +0200",
+    "Time": "2020-07-25 21:29:23 +0200",
     "ToolName": "vivado_hls",
     "ToolVersion": "2018.1"
   }
