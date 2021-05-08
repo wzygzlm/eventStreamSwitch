@@ -20,7 +20,7 @@
     "ClockPeriod": "10",
     "IsCombLogic": "0",
     "II": "1",
-    "Latency": "2",
+    "Latency": "1",
     "Uncertainty": "1.25"
   },
   "Xdc": {"OocClocks": ["create_clock -name ap_clk -period 10.000 [get_ports ap_clk]"]},
@@ -65,7 +65,7 @@
     "ap_clk": {
       "type": "clock",
       "ctype": {"CLK": {"Type": "bool"}},
-      "buses": "s_axi_config xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V xStreamIn0_V_V yStreamIn0_V_V tsStreamIn0_V_V polStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V tsStreamIn1_V_V polStreamIn1_V_V cornerStreamIn1_V_V",
+      "buses": "s_axi_config xStreamIn0_V_V yStreamIn0_V_V polStreamIn0_V_V tsStreamIn0_V_V cornerStreamIn0_V_V xStreamIn1_V_V yStreamIn1_V_V polStreamIn1_V_V tsStreamIn1_V_V cornerStreamIn1_V_V xStreamOut_V_V yStreamOut_V_V tsStreamOut_V_V polStreamOut_V_V cornerStreamOut_V_V",
       "reset": "ap_rst_n"
     },
     "ap_ctrl": {
@@ -89,12 +89,11 @@
       "port_prefix": "cornerStreamIn0_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
-          "Width": "1",
-          "Bits": "8"
+          "Width": "8"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "8"}
@@ -105,12 +104,11 @@
       "port_prefix": "cornerStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
-          "Width": "1",
-          "Bits": "8"
+          "Width": "8"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "8"}
@@ -131,18 +129,62 @@
       },
       "port_width": {"TDATA": "8"}
     },
+    "outputCor_V": {
+      "type": "data",
+      "dir": "out",
+      "width": "1",
+      "ctype": {"DATA": {
+          "Type": "integer unsigned",
+          "Width": "1"
+        }}
+    },
+    "outputPol_V": {
+      "type": "data",
+      "dir": "out",
+      "width": "1",
+      "ctype": {"DATA": {
+          "Type": "integer unsigned",
+          "Width": "1"
+        }}
+    },
+    "outputTs_V": {
+      "type": "data",
+      "dir": "out",
+      "width": "64",
+      "ctype": {"DATA": {
+          "Type": "integer unsigned",
+          "Width": "64"
+        }}
+    },
+    "outputX_V": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer unsigned",
+          "Width": "16"
+        }}
+    },
+    "outputY_V": {
+      "type": "data",
+      "dir": "out",
+      "width": "16",
+      "ctype": {"DATA": {
+          "Type": "integer unsigned",
+          "Width": "16"
+        }}
+    },
     "polStreamIn0_V_V": {
       "type": "axi4stream",
       "mode": "slave",
       "port_prefix": "polStreamIn0_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
-          "Width": "1",
-          "Bits": "8"
+          "Width": "8"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "8"}
@@ -153,12 +195,11 @@
       "port_prefix": "polStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
-          "Width": "1",
-          "Bits": "8"
+          "Width": "8"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "8"}
@@ -257,11 +298,11 @@
       "port_prefix": "tsStreamIn0_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "64"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "64"}
@@ -272,11 +313,11 @@
       "port_prefix": "tsStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "64"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "64"}
@@ -302,11 +343,11 @@
       "port_prefix": "xStreamIn0_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "16"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "16"}
@@ -317,11 +358,11 @@
       "port_prefix": "xStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "16"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "16"}
@@ -347,11 +388,11 @@
       "port_prefix": "yStreamIn0_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "16"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "16"}
@@ -362,11 +403,11 @@
       "port_prefix": "yStreamIn1_V_V",
       "has_tready": "1",
       "ctype": {
+        "TVALID": {"Type": "bool"},
         "TDATA": {
           "Type": "integer unsigned",
           "Width": "16"
         },
-        "TVALID": {"Type": "bool"},
         "TREADY": {"Type": "bool"}
       },
       "port_width": {"TDATA": "16"}
@@ -480,6 +521,126 @@
       "dir": "out",
       "width": "1"
     },
+    "xStreamIn0_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "xStreamIn0_V_V_TDATA": {
+      "dir": "in",
+      "width": "16"
+    },
+    "xStreamIn0_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "yStreamIn0_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "yStreamIn0_V_V_TDATA": {
+      "dir": "in",
+      "width": "16"
+    },
+    "yStreamIn0_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "polStreamIn0_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "polStreamIn0_V_V_TDATA": {
+      "dir": "in",
+      "width": "8"
+    },
+    "polStreamIn0_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "tsStreamIn0_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "tsStreamIn0_V_V_TDATA": {
+      "dir": "in",
+      "width": "64"
+    },
+    "tsStreamIn0_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "cornerStreamIn0_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "cornerStreamIn0_V_V_TDATA": {
+      "dir": "in",
+      "width": "8"
+    },
+    "cornerStreamIn0_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "xStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "xStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "16"
+    },
+    "xStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "yStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "yStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "16"
+    },
+    "yStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "polStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "polStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "8"
+    },
+    "polStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "tsStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "tsStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "64"
+    },
+    "tsStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
+    "cornerStreamIn1_V_V_TVALID": {
+      "dir": "in",
+      "width": "1"
+    },
+    "cornerStreamIn1_V_V_TDATA": {
+      "dir": "in",
+      "width": "8"
+    },
+    "cornerStreamIn1_V_V_TREADY": {
+      "dir": "out",
+      "width": "1"
+    },
     "xStreamOut_V_V_TREADY": {
       "dir": "in",
       "width": "1"
@@ -540,123 +701,45 @@
       "dir": "out",
       "width": "1"
     },
-    "xStreamIn0_V_V_TDATA": {
-      "dir": "in",
+    "outputX_V": {
+      "dir": "out",
       "width": "16"
     },
-    "xStreamIn0_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "xStreamIn0_V_V_TREADY": {
+    "outputX_V_ap_vld": {
       "dir": "out",
       "width": "1"
     },
-    "yStreamIn0_V_V_TDATA": {
-      "dir": "in",
+    "outputY_V": {
+      "dir": "out",
       "width": "16"
     },
-    "yStreamIn0_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "yStreamIn0_V_V_TREADY": {
+    "outputY_V_ap_vld": {
       "dir": "out",
       "width": "1"
     },
-    "tsStreamIn0_V_V_TDATA": {
-      "dir": "in",
+    "outputTs_V": {
+      "dir": "out",
       "width": "64"
     },
-    "tsStreamIn0_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "tsStreamIn0_V_V_TREADY": {
+    "outputTs_V_ap_vld": {
       "dir": "out",
       "width": "1"
     },
-    "polStreamIn0_V_V_TDATA": {
-      "dir": "in",
-      "width": "8"
+    "outputPol_V": {
+      "dir": "out",
+      "width": "1",
+      "isVector": "true"
     },
-    "polStreamIn0_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "polStreamIn0_V_V_TREADY": {
+    "outputPol_V_ap_vld": {
       "dir": "out",
       "width": "1"
     },
-    "cornerStreamIn0_V_V_TDATA": {
-      "dir": "in",
-      "width": "8"
-    },
-    "cornerStreamIn0_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "cornerStreamIn0_V_V_TREADY": {
+    "outputCor_V": {
       "dir": "out",
-      "width": "1"
+      "width": "1",
+      "isVector": "true"
     },
-    "xStreamIn1_V_V_TDATA": {
-      "dir": "in",
-      "width": "16"
-    },
-    "xStreamIn1_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "xStreamIn1_V_V_TREADY": {
-      "dir": "out",
-      "width": "1"
-    },
-    "yStreamIn1_V_V_TDATA": {
-      "dir": "in",
-      "width": "16"
-    },
-    "yStreamIn1_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "yStreamIn1_V_V_TREADY": {
-      "dir": "out",
-      "width": "1"
-    },
-    "tsStreamIn1_V_V_TDATA": {
-      "dir": "in",
-      "width": "64"
-    },
-    "tsStreamIn1_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "tsStreamIn1_V_V_TREADY": {
-      "dir": "out",
-      "width": "1"
-    },
-    "polStreamIn1_V_V_TDATA": {
-      "dir": "in",
-      "width": "8"
-    },
-    "polStreamIn1_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "polStreamIn1_V_V_TREADY": {
-      "dir": "out",
-      "width": "1"
-    },
-    "cornerStreamIn1_V_V_TDATA": {
-      "dir": "in",
-      "width": "8"
-    },
-    "cornerStreamIn1_V_V_TVALID": {
-      "dir": "in",
-      "width": "1"
-    },
-    "cornerStreamIn1_V_V_TREADY": {
+    "outputCor_V_ap_vld": {
       "dir": "out",
       "width": "1"
     }
@@ -674,31 +757,6 @@
       "interfaceRef": "ap_ctrl",
       "dir": "out"
     },
-    "xStreamOut_V_V": {
-      "interfaceRef": "xStreamOut_V_V",
-      "dir": "out",
-      "firstOutLatency": "1"
-    },
-    "yStreamOut_V_V": {
-      "interfaceRef": "yStreamOut_V_V",
-      "dir": "out",
-      "firstOutLatency": "1"
-    },
-    "tsStreamOut_V_V": {
-      "interfaceRef": "tsStreamOut_V_V",
-      "dir": "out",
-      "firstOutLatency": "1"
-    },
-    "polStreamOut_V_V": {
-      "interfaceRef": "polStreamOut_V_V",
-      "dir": "out",
-      "firstOutLatency": "1"
-    },
-    "cornerStreamOut_V_V": {
-      "interfaceRef": "cornerStreamOut_V_V",
-      "dir": "out",
-      "firstOutLatency": "1"
-    },
     "xStreamIn0_V_V": {
       "interfaceRef": "xStreamIn0_V_V",
       "dir": "in"
@@ -707,12 +765,12 @@
       "interfaceRef": "yStreamIn0_V_V",
       "dir": "in"
     },
-    "tsStreamIn0_V_V": {
-      "interfaceRef": "tsStreamIn0_V_V",
-      "dir": "in"
-    },
     "polStreamIn0_V_V": {
       "interfaceRef": "polStreamIn0_V_V",
+      "dir": "in"
+    },
+    "tsStreamIn0_V_V": {
+      "interfaceRef": "tsStreamIn0_V_V",
       "dir": "in"
     },
     "cornerStreamIn0_V_V": {
@@ -727,46 +785,106 @@
       "interfaceRef": "yStreamIn1_V_V",
       "dir": "in"
     },
-    "tsStreamIn1_V_V": {
-      "interfaceRef": "tsStreamIn1_V_V",
-      "dir": "in"
-    },
     "polStreamIn1_V_V": {
       "interfaceRef": "polStreamIn1_V_V",
+      "dir": "in"
+    },
+    "tsStreamIn1_V_V": {
+      "interfaceRef": "tsStreamIn1_V_V",
       "dir": "in"
     },
     "cornerStreamIn1_V_V": {
       "interfaceRef": "cornerStreamIn1_V_V",
       "dir": "in"
+    },
+    "xStreamOut_V_V": {
+      "interfaceRef": "xStreamOut_V_V",
+      "dir": "out",
+      "firstOutLatency": "0"
+    },
+    "yStreamOut_V_V": {
+      "interfaceRef": "yStreamOut_V_V",
+      "dir": "out",
+      "firstOutLatency": "0"
+    },
+    "tsStreamOut_V_V": {
+      "interfaceRef": "tsStreamOut_V_V",
+      "dir": "out",
+      "firstOutLatency": "0"
+    },
+    "polStreamOut_V_V": {
+      "interfaceRef": "polStreamOut_V_V",
+      "dir": "out",
+      "firstOutLatency": "0"
+    },
+    "cornerStreamOut_V_V": {
+      "interfaceRef": "cornerStreamOut_V_V",
+      "dir": "out",
+      "firstOutLatency": "0"
+    },
+    "outputX_V": {
+      "interfaceRef": "outputX_V",
+      "dir": "out",
+      "dataWidth": "16",
+      "handshakeRef": "ap_vld",
+      "firstOutLatency": "1"
+    },
+    "outputY_V": {
+      "interfaceRef": "outputY_V",
+      "dir": "out",
+      "dataWidth": "16",
+      "handshakeRef": "ap_vld",
+      "firstOutLatency": "1"
+    },
+    "outputTs_V": {
+      "interfaceRef": "outputTs_V",
+      "dir": "out",
+      "dataWidth": "64",
+      "handshakeRef": "ap_vld",
+      "firstOutLatency": "1"
+    },
+    "outputPol_V": {
+      "interfaceRef": "outputPol_V",
+      "dir": "out",
+      "dataWidth": "1",
+      "handshakeRef": "ap_vld",
+      "firstOutLatency": "1"
+    },
+    "outputCor_V": {
+      "interfaceRef": "outputCor_V",
+      "dir": "out",
+      "dataWidth": "1",
+      "handshakeRef": "ap_vld",
+      "firstOutLatency": "1"
     }
   },
   "ModuleInfo": {
     "Hierarchy": {"ModuleName": "eventStreamSwitch"},
     "Metrics": {"eventStreamSwitch": {
         "Latency": {
-          "LatencyBest": "2",
-          "LatencyAvg": "2",
-          "LatencyWorst": "2",
+          "LatencyBest": "1",
+          "LatencyAvg": "1",
+          "LatencyWorst": "1",
           "PipelineII": "1",
-          "PipelineDepth": "3",
+          "PipelineDepth": "2",
           "PipelineType": "function"
         },
         "Timing": {
           "Target": "10.00",
           "Uncertainty": "1.25",
-          "Estimate": "2.75"
+          "Estimate": "4.02"
         },
         "Area": {
           "BRAM_18K": "0",
-          "FF": "806",
-          "LUT": "870",
+          "FF": "431",
+          "LUT": "593",
           "DSP48E": "0"
         }
       }}
   },
   "GenData": {
     "DataVersion": "0.1",
-    "Time": "2020-07-25 21:29:23 +0200",
+    "Time": "2021-05-08 13:15:59 +0200",
     "ToolName": "vivado_hls",
     "ToolVersion": "2018.1"
   }
